@@ -20,6 +20,7 @@ function Products() {
     let [name, setName] = useState([]);
     let [price, setPrice] = useState([]);
     let [description, setDescription] = useState([]);
+    let [toggleReload, setToggleReload] = useState(false);
   
 
        // Get All Products
@@ -36,8 +37,8 @@ function Products() {
               })
               if (response.status === 200) {
                   console.log("response: ", response.data.data);
-                  setProducts(response.data.data);
-                  // setProducts(response.data.data.reverse());
+                  // setProducts(response.data.data);
+                  setProducts(response.data.data.reverse());
                   // setProduct(response.data);
                   
 
@@ -50,7 +51,7 @@ function Products() {
       }
       getAllProducts();
 
-  }, [])
+  }, [toggleReload])
 
 
 
@@ -78,7 +79,7 @@ function Products() {
             console.log("response: ", response.data);
           })
           console.log("post", object);
-          
+          setToggleReload(!toggleReload)
          
           toast.success('Added Sucessfully', {
             position: "top-center",
@@ -163,7 +164,7 @@ function Products() {
        </form>
 
 
-       {(products === null) ? null :
+        {/* {(products === null) ? null :
           <div>
            
         
@@ -184,7 +185,30 @@ function Products() {
 
 
 
-       }
+       } */}
+
+<div>
+ 
+     {products?.map((eachProduct, i) => (
+          <div key={i}>
+     
+       
+       {/* <div className="time">{new Date().toDateString()}</div> */}
+        <div className="name"><h3>{eachProduct?.name}</h3></div> <br />
+
+
+          <div className="price">price: {eachProduct?.price}</div>
+          
+      
+         <div className="description">description : {eachProduct?.description}</div> 
+
+     
+     
+    </div>
+      ))}
+    </div>
+    
+
      
        <ToastContainer />
      
