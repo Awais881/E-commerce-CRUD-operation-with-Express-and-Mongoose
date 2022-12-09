@@ -5,7 +5,13 @@ import Button from '@mui/material/Button';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
 
 
@@ -15,12 +21,19 @@ if (window.location.href.split(":")[0] === "http") {
     baseUrl = `http://localhost:5001`;
 }
 function Products() {
-      
+    // const [chapli, setchapli] = useState(false); 
     let [products, setProducts] = useState(null);
     let [name, setName] = useState([]);
     let [price, setPrice] = useState([]);
     let [description, setDescription] = useState([]);
     let [toggleReload, setToggleReload] = useState(false);
+    let [editProduct, setEditProduct] = useState(
+      { editingId: null,
+        editingName: "",
+        editingPrice: "",
+        editingDescription: ""
+      }
+    );
   
 
        // Get All Products
@@ -59,7 +72,11 @@ function Products() {
 
 
 
-
+let editObj=   {
+         name: editProduct.editingName,
+         price: editProduct.editingPrice,
+         description: editProduct.editingDescription
+}
 
 
 
@@ -114,18 +131,71 @@ function Products() {
     }
       
         
+  
+  //   let updateHandler = async (e) => {
+  //     e.preventDefault();
+
+  //     try {
+  //         let updated = await axios.put(`${baseUrl}/product/${editProduct}`,editObj)
+  //              {
+  //                   name: editProduct.editingName,
+  //                   price: editProduct.editingPrice,
+  //                 description: editProduct.editingDescription
+  //              }
+  //             // {
+  //             //     withCredentials: true
+  //             // }
+          
+  //         console.log("updated: ", updated.data);
+  //         setToggleReload(!toggleReload);
+  //         setEditProduct({
+  //                editingId: null,
+  //                editingName: "",
+  //                editingPrice: "",
+  //                editingDescription: "",
+  //              });
+
+  //     } catch (e) {
+  //         console.log("Error in api call: ", e);
+  //     }
+
+
+  // }
+
+
+  const updateHandler = (e) => {
+    console.log(editProduct.editingId);
+    setToggleReload(!toggleReload);
+    e.preventDefault();
+    axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
+      // {
+      //   name: editProduct.editingName,
+      //   price: editProduct.editingPrice,
+      //   description: editProduct.editingDescription
+      // }
       
+      .then((response) => {
+        // console.log(response);
+      });
+      setEditProduct({
+      editingId: null,
+      editingName: "",
+      editingPrice: "",
+      editingDescription: "",
+    });
+  };
 
-
-
-
-
-
-
-
-
-
-
+  // const DeletePost = (postId) => {
+  //   // console.log(postId);
+  //   axios
+  //     .delete(`${baseUrl}/product/${postId}`)
+  //     .then((response) => {
+  //       // console.log(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err);
+  //     });
+  // }
     return (
      <>
      
@@ -158,7 +228,7 @@ function Products() {
            }}
          
          />
-<Button  variant="contained" color="success"  type="submit" >
+<Button  variant="contained" color="success" className="add" type="submit" >
   Add
 </Button>
        </form>
@@ -187,28 +257,108 @@ function Products() {
 
        } */}
 
+
+
 <div>
  
      {products?.map((eachProduct, i) => (
           <div key={i}>
-     
+   <div className="editbtn">  
+       <Button variant="contained" color="success" onClick={() => {
+                          setEditProduct({
+                            editingId: eachProduct?.id,
+                            editingName: eachProduct?.name,
+                            editingPrice: eachProduct?.price,
+                            editingDescription: eachProduct?.description
+                          })
+                      }}>
+                        Edit</Button>
+                    
+       <IconButton aria-label="delete"
        
+       onClick={async () => {
+       try {
+        let deleted = await axios.delete(`${baseUrl}/product/${eachProduct?.id}`,
+       
+            // {
+            //     withCredentials: true
+            // }
+        )
+        console.log("deleted: ", deleted.data);
+        setToggleReload(!toggleReload)
+       
+       } catch (e) {
+        console.log("Error in api call: ", e);
+       }
+       }}
+       
+       
+       >
+       <DeleteIcon />
+       </IconButton>
+       </div>  
+<Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="140"
+        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3SwX529LOk8gikjlCqVSFJ5taynRirQh0qA&usqp=CAU"
+        alt="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+        {eachProduct?.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+        {eachProduct?.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">{eachProduct?.price}</Button>
+        <Button size="small">Share</Button>
+      </CardActions>
+    </Card>
        {/* <div className="time">{new Date().toDateString()}</div> */}
-        <div className="name"><h3>{eachProduct?.name}</h3></div> <br />
+        {/* <div className="name"><h3>{eachProduct?.name}</h3></div> <br />
 
 
           <div className="price">price: {eachProduct?.price}</div>
           
       
-         <div className="description">description : {eachProduct?.description}</div> 
+         <div className="description">description : {eachProduct?.description}</div>  */}
 
      
      
+                                                 
+ {
+   (eachProduct.id === editProduct.editingId ) ?
+      (<div>
+      
+           <h1>update form</h1>
+                <form onSubmit={updateHandler}>
+                    Name: <input type="text" 
+                    onChange={(e) => { setEditProduct({ ...editProduct, editingName: e.target.value }) }}
+                     value={editProduct.editingName} /> <br />
+                    Price:<input type="text" 
+                    onChange={(e) => { setEditProduct({ ...editProduct, editingPrice: e.target.value }) }}
+                     value={editProduct.editingPrice} /> <br />
+                    Description:<input type="text"
+                     onChange={(e) => { setEditProduct({ ...editProduct, editingDescription : e.target.value }) }}
+                      value={editProduct.editingDescription} /> <br />
+                  
+
+                    <button type="submit" >Proceed Update</button>  
+        </form>
+
+      </div>): null 
+    }
+         
     </div>
       ))}
+
     </div>
     
 
+    
      
        <ToastContainer />
      
