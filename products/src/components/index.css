@@ -1,14 +1,36 @@
 *{
     margin: 0px;
-    padding: 10px;
+    /* padding: 10px; */
    
 }
+body {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcYQdkOF5Id7-yh7njCEU8ScMMfoqoLBnNIQ&usqp=CAU');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
 .editbtn{
-    position: absolute;
+ 
+    display: flex;
+    justify-content: center;
     
 }
 .add{
     width: 100px;
     height: 50px;
     
+}
+.textFields{
+  display: flex;
+  justify-content: space-around;
+}
+.textFields{
+    margin-left: 5px;
+}
+h1{
+    text-align: center;
+}
+.card{
+    display: flex;
+    justify-content: center;
 }

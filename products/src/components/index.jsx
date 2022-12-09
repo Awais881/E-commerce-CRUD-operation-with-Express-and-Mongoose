@@ -21,7 +21,8 @@ if (window.location.href.split(":")[0] === "http") {
     baseUrl = `http://localhost:5001`;
 }
 function Products() {
-    // const [chapli, setchapli] = useState(false); 
+    // const [del, setDel] = useState(""); 
+
     let [products, setProducts] = useState(null);
     let [name, setName] = useState([]);
     let [price, setPrice] = useState([]);
@@ -168,15 +169,28 @@ let editObj=   {
     setToggleReload(!toggleReload);
     e.preventDefault();
     axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
+    
       // {
       //   name: editProduct.editingName,
       //   price: editProduct.editingPrice,
       //   description: editProduct.editingDescription
       // }
-      
+     
+   
       .then((response) => {
-        // console.log(response);
-      });
+        console.log(response);
+        toast.success('Update Sucessfully', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      })
+      
       setEditProduct({
       editingId: null,
       editingName: "",
@@ -185,22 +199,43 @@ let editObj=   {
     });
   };
 
-  // const DeletePost = (postId) => {
-  //   // console.log(postId);
-  //   axios
-  //     .delete(`${baseUrl}/product/${postId}`)
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log("err", err);
-  //     });
-  // }
+  const deleted = (id) => {
+    // console.log(postId);
+    setToggleReload(!toggleReload);
+    axios.delete(`${baseUrl}/product/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        toast.success('Deleted Sucessfully', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      })
+      .catch((err) => {
+        console.log("err", err);
+        toast.error('Error', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      });
+  }
     return (
      <>
      
      <form onSubmit={saveProduct}>
-
+     <h1>Add Products</h1> 
+<div className="textFields">
        <TextField 
        id="name"
         label="Name"
@@ -231,8 +266,9 @@ let editObj=   {
 <Button  variant="contained" color="success" className="add" type="submit" >
   Add
 </Button>
-       </form>
-
+</div>
+       </form> <br />
+     
 
         {/* {(products === null) ? null :
           <div>
@@ -272,39 +308,25 @@ let editObj=   {
                             editingDescription: eachProduct?.description
                           })
                       }}>
-                        Edit</Button>
+                        Edit</Button> 
                     
-       <IconButton aria-label="delete"
-       
-       onClick={async () => {
-       try {
-        let deleted = await axios.delete(`${baseUrl}/product/${eachProduct?.id}`,
-       
-            // {
-            //     withCredentials: true
-            // }
-        )
-        console.log("deleted: ", deleted.data);
-        setToggleReload(!toggleReload)
-       
-       } catch (e) {
-        console.log("Error in api call: ", e);
-       }
-       }}
-       
-       
-       >
+       <IconButton aria-label="delete" onClick={()=>{
+        deleted(eachProduct?.id);
+        // setDel()
+       }}>   
        <DeleteIcon />
-       </IconButton>
-       </div>  
+       </IconButton> 
+       </div>   
+       <div className="card">
 <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="140"
         image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3SwX529LOk8gikjlCqVSFJ5taynRirQh0qA&usqp=CAU"
         alt="green iguana"
-      />
-      <CardContent>
+      /> 
+
+      <CardContent> 
         <Typography gutterBottom variant="h5" component="div">
         {eachProduct?.name}
         </Typography>
@@ -314,9 +336,10 @@ let editObj=   {
       </CardContent>
       <CardActions>
         <Button size="small">{eachProduct?.price}</Button>
-        <Button size="small">Share</Button>
+        
       </CardActions>
     </Card>
+    </div>
        {/* <div className="time">{new Date().toDateString()}</div> */}
         {/* <div className="name"><h3>{eachProduct?.name}</h3></div> <br />
 

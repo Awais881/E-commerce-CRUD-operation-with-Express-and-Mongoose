@@ -17,8 +17,8 @@ app.post('/product', (req, res) => {
 
     if ( // validation
         !body.name
-        && !body.price
-        && !body.description
+      || !body.price
+        || !body.description
     ) {
         res.status(400).send({
             message: "required parameters missing",
@@ -31,7 +31,7 @@ app.post('/product', (req, res) => {
     console.log(body.description)
 
     products.push({
-        id: new Date().getTime(),
+        id:`${new Date().getTime()}`,
         name: body.name,
         price: body.price,
         description: body.description
@@ -79,7 +79,7 @@ app.delete('/product/:id', (req, res) => {
 
     let isFound = false;
     for (let i = 0; i < products.length; i++) {
-        if (products[i].id === id) {
+        if (products[i].id == id) {
             products.splice(i, 1);
             res.send({
                 message: "product deleted successfully"
