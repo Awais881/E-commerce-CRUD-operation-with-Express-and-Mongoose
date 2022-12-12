@@ -6,6 +6,7 @@ import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Mes
    FavoriteBorder, ToggleOffOutlined, Mode, ModeNight,PeopleAlt, Logout} from '@mui/icons-material'
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { ToastContainer, toast } from 'react-toastify';
 import { red } from '@mui/material/colors'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -586,8 +587,8 @@ let editObj=   {
         </IconButton>
       </CardActions>
       <div className="editbtn">  
-       <Button 
-       variant="contained" color="success" onClick={() => {
+       <Button className="edit"
+       variant="outlined" color="success" onClick={() => {
                           setEditProduct({
                             editingId: eachProduct?.id,
                             editingName: eachProduct?.name,
@@ -595,14 +596,18 @@ let editObj=   {
                             editingDescription: eachProduct?.description
                           })
                       }}>
-                      Edit</Button> 
+                      Edit</Button> &nbsp; &nbsp;
                     
-       <IconButton aria-label="delete" onClick={()=>{
+       {/* <IconButton aria-label="delete" onClick={()=>{
         deleted(eachProduct?.id);
         // setDel()
        }}>   
        <DeleteIcon />
-       </IconButton> 
+       </IconButton>  */}
+        <Button variant="outlined" startIcon={<DeleteIcon />}  onClick={()=>{
+        deleted(eachProduct?.id);  }}> 
+        Delete
+      </Button>
        </div> 
 
 
@@ -612,18 +617,46 @@ let editObj=   {
            
                 <h1>update form</h1>
                      <form onSubmit={updateHandler}>
-                         Name: <input type="text" 
-                         onChange={(e) => { setEditProduct({ ...editProduct, editingName: e.target.value }) }}
-                          value={editProduct.editingName} /> <br />
-                         Price:<input type="text" 
-                         onChange={(e) => { setEditProduct({ ...editProduct, editingPrice: e.target.value }) }}
-                          value={editProduct.editingPrice} /> <br />
-                         Description:<input type="text"
-                          onChange={(e) => { setEditProduct({ ...editProduct, editingDescription : e.target.value }) }}
-                           value={editProduct.editingDescription} /> <br />
+
+                     <TextField
+                    sx={{ width: "100%" }}
+                    id="standard-multiline-static"
+                    onChange={(e) =>
+                     { setEditProduct({ ...editProduct, editingName: e.target.value }) }}
+                     value={editProduct.editingName}
+                    multiline
+                    rows={1}
+                    label="Update Name"
+                    variant="filled" />
+
+                   <TextField
+                    sx={{ width: "100%" }}
+                    onChange={(e) => 
+                     { setEditProduct({ ...editProduct, editingPrice: e.target.value }) }}
+                     value={editProduct.editingPrice}
+                    id="standard-multiline-static"
+                    multiline
+                    rows={1}
+                    label="Update Price"
+                    variant="filled" />
+
+                   <TextField
+                    sx={{ width: "100%" }}
+                    onChange=
+                          {(e) => { setEditProduct({ ...editProduct, editingDescription : e.target.value }) }}
+                           value={editProduct.editingDescription}
+                    id="standard-multiline-static"
+                    multiline
+                    rows={1}
+                    label="Update Description"
+                    variant="filled" />
                        
+                     
+                       <br />
      
-                         <button type="submit" >Proceed Update</button>  
+                       <Button variant="contained" color="success" type='submit'>
+            Proced Update
+             </Button>
              </form>
      
            </div>): null 
