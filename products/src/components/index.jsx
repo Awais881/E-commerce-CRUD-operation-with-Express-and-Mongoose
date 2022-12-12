@@ -29,10 +29,10 @@ if (window.location.href.split(":")[0] === "http") {
 function Products() {
     // const [del, setDel] = useState(""); 
     // const [chapli, setchapli] = useState(false);
-    const [products, setProducts] = useState(null);
-    const [name, setName] = useState([]);
-    const [price, setPrice] = useState([]);
-    const [description, setDescription] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [description, setDescription] = useState("");
     const [toggleReload, setToggleReload] = useState(false);
     const [editProduct, setEditProduct] = useState(
       { editingId: null,
@@ -58,7 +58,7 @@ function Products() {
               if (response.status === 200) {
                   console.log("response: ", response.data.data);
                   // setProducts(response.data.data);
-                  setProducts(response.data.data.reverse());
+                  setProducts(response.data.data);
                   // setProduct(response.data);
                   
 
