@@ -3,13 +3,13 @@
     /* padding: 10px; */
    
 }
-body {
+/* body {
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcYQdkOF5Id7-yh7njCEU8ScMMfoqoLBnNIQ&usqp=CAU');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-  }
-.editbtn{
+  } */
+/* .editbtn{
  
     display: flex;
     justify-content: center;
@@ -28,9 +28,12 @@ body {
     margin-left: 5px;
 }
 h1{
-    text-align: center;
-}
+    text-align: center; */
+/* }
 .card{
     display: flex;
     justify-content: center;
 }
+.profile,.icon,.logo{
+    cursor: pointer;
+} */
