@@ -52,7 +52,7 @@ function Products() {
         try {
           const response = await axios.get(`${baseUrl}/products`)
           console.log("response: ", response.data);
-          setProducts(response.data.data.reverse());
+          setProducts(response.data.products.reverse());
     
     
         } catch (error) {
