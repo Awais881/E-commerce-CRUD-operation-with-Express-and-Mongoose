@@ -29,10 +29,10 @@ if (window.location.href.split(":")[0] === "http") {
 function Products() {
     // const [del, setDel] = useState(""); 
     // const [chapli, setchapli] = useState(false);
-    const [products, setProducts] = useState(null);
-    const [name, setName] = useState([]);
-    const [price, setPrice] = useState([]);
-    const [description, setDescription] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [description, setDescription] = useState("");
     const [toggleReload, setToggleReload] = useState(false);
     const [editProduct, setEditProduct] = useState(
       { editingId: null,
@@ -58,7 +58,22 @@ function Products() {
        
     useEffect(() => {
 
+<<<<<<< HEAD
       getAllProducts();
+=======
+      const AllProduct = async() => {
+        try {
+          const response = await axios.get(`${baseUrl}/products`)
+          console.log("response: ", response.data);
+          setProducts(response.data.data.reverse());
+    
+    
+        } catch (error) { 
+          console.log("error in getting all products", error);
+        }
+      };
+      AllProduct();
+>>>>>>> e3fff64c13ba5d3e643a532107233af5dbeb9f02
 
   }, [toggleReload])
 
@@ -91,7 +106,7 @@ let editObj=   {
           .then(response => {
             console.log("response: ", response.data);
           })
-          console.log("post", object);
+          // console.log("post", object);
           setToggleReload(!toggleReload)
          
           toast.success('Added Sucessfully', {
@@ -127,7 +142,11 @@ let editObj=   {
     }
       
         
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> e3fff64c13ba5d3e643a532107233af5dbeb9f02
 
 
   const updateHandler = (e) => {
@@ -136,12 +155,7 @@ let editObj=   {
     e.preventDefault();
     axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
     
-      // {
-      //   name: editProduct.editingName,
-      //   price: editProduct.editingPrice,
-      //   description: editProduct.editingDescription
-      // }
-     
+      
    
       .then((response) => {
         console.log(response);
@@ -427,81 +441,7 @@ let editObj=   {
           
  
 
-  {/* <Box flex={1} mt="20px">
-            {
-              products.map((eachProduct, i) => (
-                <Card key={i} sx={{
-                  height: { xs: "400", sm: "400", md: "500", lg: "500" },
-                  marginTop: "10px"
-                }}>
-                  <CardHeader
-                    avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                      R
-                    </Avatar>}
-                    action={<IconButton aria-label="settings">
-                      {/* <MoreVert /> */}
-                  
-                        {/* <Select sx={{ mr: "10px" }} onFocus={() => { setDel(eachItem?.id) }}>
-                          <MenuItem
-
-                            onClick={() => {
-                              setEditProduct({
-                                editingId: eachProduct?.id,
-                                editingName: eachProduct?.name,
-                                editingPrice: eachProduct?.price,
-                                editingDescription: eachProduct?.description
-                              })
-                          }}>Edit</MenuItem>
-                          <MenuItem
-                            onClick={()=>{
-                              deleted(eachProduct?.id);
-                            }}>  Delete
-                          </MenuItem>
-                        </Select>
-                       
-                      }
-                    </IconButton>}
-                    title=
-                    {
-                      (eachItem.id === isEditing && chapli === true) ?
-                        <Box
-                          onSubmit={updation}
-                          component="form"
-                          // sx={{
-                          //   '& > :not(style)': { m: 1, width: '25ch' },
-                          // }}
-                          noValidate
-                          autoComplete="off"
-                        >
-                          <TextField
-                            id="standard-basic"
-                            label="update your name"
-                            variant="standard"
-                            value={isEditingText}
-                            onChange={(e) => setIsEditingText(e.target.value)}
-                            placeholder="input your name"
-                          />
-                          <Button type='submit' sx={{ mt: "10px" }}>Update</Button>
-
-                        </Box>
-
-                        : (chapli === false) ? eachItem?.name : null}
-                    subheader={moment(new Date).format('MMM Do YY')} />
-                  <Box
-                    height={300}
-
-                    sx={{
-                      height: { xs: "200", sm: "300", md: "300", lg: "300" },
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <img
-                      src="https://mui.com/static/images/cards/paella.jpg"
-                      alt="Paella dish"
-                      width="95%"
-                    />
-                   */} 
+ 
      <Box flex={2} mt="20px">
 {products?.map((eachProduct, i) => (
 
@@ -509,7 +449,7 @@ let editObj=   {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-     {eachProduct?.name}
+      {eachProduct?.name}
 
           </Avatar>
         }
