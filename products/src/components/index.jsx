@@ -24,7 +24,10 @@ import { AppBar, Avatar, AvatarGroup, Badge, Button, ButtonGroup, Card, CardActi
 
 let baseUrl = ``;
 if (window.location.href.split(":")[0] === "http") {
-    baseUrl = `http://localhost:5001`;
+    baseUrl = `http://localhost:5000`;
+}
+else{
+  baseUrl= "https://motionless-tiara-hare.cyclic.app/";
 }
 function Products() {
     // const [del, setDel] = useState(""); 
@@ -50,8 +53,8 @@ function Products() {
        const getAllProducts = () => {
         axios.get(`${baseUrl}/products`)
           .then(response => {
-            console.log("allDAta", response.data.data);
-            setProducts(response.data.data)
+            console.log("AllProducts", response.data.data);
+            setProducts(response?.data?.data)
           })
           .catch(err => {
             console.log("err", err);
@@ -90,13 +93,10 @@ let editObj=   {
       
     const saveProduct = async (e) => {
         e.preventDefault();
-
-        try {
-          axios.post(`${baseUrl}/product`, object)
-          .then(response => {
-            console.log("response: ", response.data);
-          })
-          // console.log("post", object);
+        axios.post(`${baseUrl}/product`, object)
+        .then(response => {
+          console.log(response.data.data);
+          setProducts(response.data.data)
           setToggleReload(!toggleReload)
          
           toast.success('Added Sucessfully', {
@@ -110,36 +110,30 @@ let editObj=   {
             theme: "light",
             });
               
+        })
+          // console.log("post", object);
           
            
-            // {
-            //   setName(response.data);
-            //   setPrice(response.data);
-            //   setDescription(response.data);
-            // }
-           
+          
            
 
-        } 
+         
         
         
         
-        
-        catch (e) {
-            console.log("error : ", e);
-        }
-
+        .catch(err => {
+          console.log("err", err);
+        })
     }
-      
         
   
 
 
 
   const updateHandler = (e) => {
+    e.preventDefault();
     console.log(editProduct.editingId);
     setToggleReload(!toggleReload);
-    e.preventDefault();
     axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
     
       
