@@ -38,7 +38,8 @@ app.post('/product', (req, res) => {
     });
 
     res.send({
-        message: "product added successfully"
+        message: "product added successfully",
+        data: products
     });
 })
 
