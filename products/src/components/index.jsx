@@ -46,7 +46,7 @@ function Products() {
        // Get All Products
 
 
-       
+
        const getAllProducts = () => {
         axios.get(`${baseUrl}/products`)
           .then(response => {
