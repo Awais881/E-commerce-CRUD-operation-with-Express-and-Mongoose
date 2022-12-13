@@ -156,8 +156,9 @@ let editObj=   {
           progress: undefined,
           theme: "light",
           });
+          getAllProducts();
       })
-      
+
       setEditProduct({
       editingId: null,
       editingName: "",
@@ -182,7 +183,9 @@ let editObj=   {
           progress: undefined,
           theme: "light",
           });
+          getAllProducts();
       })
+ 
       .catch((err) => {
         console.log("err", err);
         toast.error('Error', {
