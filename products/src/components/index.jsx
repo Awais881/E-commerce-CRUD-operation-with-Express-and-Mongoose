@@ -44,6 +44,9 @@ function Products() {
   
     const [open, setOpen] = useState(false);
        // Get All Products
+
+
+       
        const getAllProducts = () => {
         axios.get(`${baseUrl}/products`)
           .then(response => {
@@ -58,22 +61,9 @@ function Products() {
        
     useEffect(() => {
 
-<<<<<<< HEAD
+
       getAllProducts();
-=======
-      const AllProduct = async() => {
-        try {
-          const response = await axios.get(`${baseUrl}/products`)
-          console.log("response: ", response.data);
-          setProducts(response.data.data.reverse());
-    
-    
-        } catch (error) { 
-          console.log("error in getting all products", error);
-        }
-      };
-      AllProduct();
->>>>>>> e3fff64c13ba5d3e643a532107233af5dbeb9f02
+
 
   }, [toggleReload])
 
@@ -142,11 +132,8 @@ let editObj=   {
     }
       
         
-<<<<<<< HEAD
   
-=======
 
->>>>>>> e3fff64c13ba5d3e643a532107233af5dbeb9f02
 
 
   const updateHandler = (e) => {
