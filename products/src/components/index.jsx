@@ -44,31 +44,20 @@ function Products() {
   
     const [open, setOpen] = useState(false);
        // Get All Products
-
+       const getAllProducts = () => {
+        axios.get(`${baseUrl}/products`)
+          .then(response => {
+            console.log("allDAta", response.data.data);
+            setProducts(response.data.data)
+          })
+          .catch(err => {
+            console.log("err", err);
+          })
+      };
+    
        
     useEffect(() => {
 
-      const getAllProducts = async () => {
-          try {
-              let response = await axios({
-                  url: `${baseUrl}/products`,
-                  method: "get",
-                  // withCredentials: true
-              })
-              if (response.status === 200) {
-                  console.log("response: ", response.data.data);
-                  // setProducts(response.data.data);
-                  setProducts(response.data.data.reverse());
-                  // setProduct(response.data);
-                  
-
-              } 
-              
-             
-          } catch (e) {
-              console.log("Error in api call: ", e);
-          }
-      }
       getAllProducts();
 
   }, [toggleReload])
@@ -139,35 +128,6 @@ let editObj=   {
       
         
   
-  //   let updateHandler = async (e) => {
-  //     e.preventDefault();
-
-  //     try {
-  //         let updated = await axios.put(`${baseUrl}/product/${editProduct}`,editObj)
-  //              {
-  //                   name: editProduct.editingName,
-  //                   price: editProduct.editingPrice,
-  //                 description: editProduct.editingDescription
-  //              }
-  //             // {
-  //             //     withCredentials: true
-  //             // }
-          
-  //         console.log("updated: ", updated.data);
-  //         setToggleReload(!toggleReload);
-  //         setEditProduct({
-  //                editingId: null,
-  //                editingName: "",
-  //                editingPrice: "",
-  //                editingDescription: "",
-  //              });
-
-  //     } catch (e) {
-  //         console.log("Error in api call: ", e);
-  //     }
-
-
-  // }
 
 
   const updateHandler = (e) => {
