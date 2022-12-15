@@ -32,7 +32,7 @@ else{
 function Products() {
     // const [del, setDel] = useState(""); 
     // const [chapli, setchapli] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState();
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -91,14 +91,35 @@ let editObj=   {
     }
                // Add Products
       
-    const saveProduct = async (e) => {
-        e.preventDefault();
-        axios.post(`${baseUrl}/product`, object)
-        .then(response => {
-          console.log(response.data.data);
-          setProducts(response.data.data)
-          setToggleReload(!toggleReload)
+    // const saveProduct = async (e) => {
+    //     e.preventDefault();
+    //     axios.post(`${baseUrl}/product`, object)
+    //     .then(response => {
+    //       console.log(response.data.data);
+    //       setProducts(response.data.data)
+    //       setToggleReload(!toggleReload)
          
+    //       toast.success('Added Sucessfully', {
+    //         position: "top-center",
+    //         autoClose: 5000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "light",
+    //         });
+              
+    //     })
+          // console.log("post", object);
+          
+           
+          const saveProduct = async (e) => {
+            e.preventDefault();
+            try {
+              const response = await axios.post(`${baseUrl}/product`, object);
+              setToggleReload(!toggleReload)
+           
           toast.success('Added Sucessfully', {
             position: "top-center",
             autoClose: 5000,
@@ -109,58 +130,83 @@ let editObj=   {
             progress: undefined,
             theme: "light",
             });
-              
-        })
-          // console.log("post", object);
-          
-           
-          
+            } catch (err) {
+              console.log("err", err);
+            }
+          };
            
 
          
         
         
         
-        .catch(err => {
-          console.log("err", err);
-        })
-    }
+    //     .catch(err => {
+    //       console.log("err", err);
+    //     })
+    // }
         
   
 
 
 
-  const updateHandler = (e) => {
-    e.preventDefault();
-    console.log(editProduct.editingId);
-    setToggleReload(!toggleReload);
-    axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
+  // const updateHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log(editProduct.editingId);
+  //   setToggleReload(!toggleReload);
+  //   axios.put(`${baseUrl}/product/${editProduct.editingId}`, editObj)
     
       
    
-      .then((response) => {
-        console.log(response);
-        toast.success('Update Sucessfully', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
-          getAllProducts();
-      })
+  //     .then((response) => {
+  //       console.log(response);
+  //       toast.success('Update Sucessfully', {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         });
+  //         getAllProducts();
+  //     })
 
+  //     setEditProduct({
+  //     editingId: null,
+  //     editingName: "",
+  //     editingPrice: "",
+  //     editingDescription: "",
+  //   });
+  // };
+  const updateHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `${baseUrl}/product/${editProduct.editingId}`, editObj)
+        console.log(editProduct.editingId);
+           setToggleReload(!toggleReload);
+    
       setEditProduct({
-      editingId: null,
-      editingName: "",
-      editingPrice: "",
-      editingDescription: "",
-    });
+        editingId: null,
+        editingName: "",
+        editingPrice: "",
+        editingDescription: "",
+      });
+      toast.success('Update Sucessfully', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    } catch (err) {
+      console.log("err", err);
+    }
   };
-
   const deleted = (id) => {
     // console.log(postId);
     setToggleReload(!toggleReload);

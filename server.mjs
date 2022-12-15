@@ -31,7 +31,7 @@ app.post('/product', (req, res) => {
     console.log(body.description)
 
     products.unshift({
-        id:`${new Date().getTime()}`,
+        id: new Date().getTime(),
         name: body.name,
         price: body.price,
         description: body.description
@@ -56,7 +56,7 @@ app.get('/product/:id', (req, res) => {
     let isFound = false;
     for (let i = 0; i < products.length; i++) {
 
-        if (products[i].id === id) {
+        if (products[i].id == id) {
             res.send({
                 message: `get product by id: ${products[i].id} success`,
                 data: products[i]
@@ -119,7 +119,7 @@ app.put('/product/:id', (req, res) => {
 
     let isFound = false;
     for (let i = 0; i < products.length; i++) {
-        if (products[i].id === id) {
+        if (products[i].id == id) {
 
             products[i].name = body.name;
             products[i].price = body.price;
