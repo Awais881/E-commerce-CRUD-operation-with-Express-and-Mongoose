@@ -50,23 +50,35 @@ function Products() {
 
 
 
-       const getAllProducts = () => {
-        axios.get(`${baseUrl}/products`)
-          .then(response => {
-            console.log("AllProducts", response.data.data);
-            setProducts(response?.data?.data)
-          })
-          .catch(err => {
-            console.log("err", err);
-          })
-      };
+      //  const getAllProducts = () => {
+      //   axios.get(`${baseUrl}/products`)
+      //     .then(response => {
+      //       console.log("AllProducts", response.data.data);
+      //       setProducts(response?.data?.data)
+      //     })
+      //     .catch(err => {
+      //       console.log("err", err);
+      //     })
+      // };
     
-       
+      const getAllProducts = async () => {
+        try {
+          const response = await axios
+            .get(`${baseUrl}/products`)
+            .then((response) => {
+              console.log(response.data);
+              setProducts(response.data.products);
+            });
+        } catch (err) {
+          console.log("err", err);
+        }
+      }; 
     useEffect(() => {
 
 
       getAllProducts();
-
+        
+     
 
   }, [toggleReload])
 

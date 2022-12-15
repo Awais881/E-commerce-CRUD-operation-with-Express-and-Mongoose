@@ -15,7 +15,7 @@ app.post('/product', (req, res) => {
 
     const body = req.body;
 
-    if ( // validation
+    if ( 
     !body.name
     && !body.price
     && !body.description
@@ -39,14 +39,14 @@ app.post('/product', (req, res) => {
 
     res.send({
         message: "product added successfully",
-        data: products
+        
     });
 })
 
 app.get('/products', (req, res) => {
     res.send({
         message: "got all products successfully",
-        data: products
+        data: products,
     })
 })
 app.get('/product/:id', (req, res) => {
