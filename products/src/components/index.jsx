@@ -32,7 +32,7 @@ else{
 function Products() {
     // const [del, setDel] = useState(""); 
     // const [chapli, setchapli] = useState(false);
-    const [products, setProducts] = useState("");
+    const [products, setProducts] = useState([]);
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
